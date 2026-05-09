@@ -1,93 +1,163 @@
 #include <iostream>
 using namespace std;
-class Node{
-    public:
-
+class Node
+{
+public:
     int data;
     Node *next;
     // consturctor
-    Node(int data){
+    Node(int data)
+    {
         this->data = data;
-        this->next=nullptr;
+        this->next = nullptr;
     }
-
-
 };
 // creating a Linked List with array
 Node *createLLFromArray(vector<int> &arr)
 {
-        Node *head = new Node(arr[0]);
-        Node *tail = head;
-        // creating the other Link 
-        for(int i =1;i<arr.size();i++){
-            // create a node 
-            Node *temp = new Node(arr[i]);
-            tail->next = temp;
-            tail = temp;;
-        }
-        return head;
-
+    Node *head = new Node(arr[0]);
+    Node *tail = head;
+    // creating the other Link
+    for (int i = 1; i < arr.size(); i++)
+    {
+        // create a node
+        Node *temp = new Node(arr[i]);
+        tail->next = temp;
+        tail = temp;
+        ;
+    }
+    return head;
 }
 // print Linked List
 void PrintLL(Node *&head)
 {
-        Node *temp = head;
-        while(temp){
-            cout<<temp->data<<"->";
-            temp = temp->next;
-
-        }
-        cout<<"null"<<endl;
-
+    Node *temp = head;
+    while (temp)
+    {
+        cout << temp->data << "->";
+        temp = temp->next;
+    }
+    cout << "null" << endl;
 }
 // delete head of the Linked List
-Node* deleteHead(Node *&head){
-    if(!head) {
+Node *deleteHead(Node *&head)
+{
+    if (!head)
+    {
         return nullptr;
     }
-    // store the next node 
+    // store the next node
     Node *temp = head;
     head = head->next;
-    delete(temp);
+    delete (temp);
     return head;
 }
 // deleting the tail
 // first we have to reach the seonc last element of the linked list and should exist
-Node* deleteLast(Node *&head){
-    if(!head) return nullptr;
-    if(!(head->next)){
+Node *deleteLast(Node *&head)
+{
+    if (!head)
+        return nullptr;
+    if (!(head->next))
+    {
         free(head);
         head = nullptr;
         return head;
     }
-        Node *temp= head;
-        while(temp->next->next){
-            temp = temp->next;
-        }
-        free(temp->next);
-          temp->next = nullptr;
-        return head;
+    Node *temp = head;
+    while (temp->next->next)
+    {
+        temp = temp->next;
+    }
+    free(temp->next);
+    temp->next = nullptr;
+    return head;
 }
 
+// deleting the kth node from the list
+Node *delteK(Node *head, int k)
+{
+    if (!head)
+        return nullptr;
+    if (k == 1)
+    {
+        Node *temp = head;
+        head = head->next;
+        delete temp;
 
-int main() {
-    // static variable 
+        return head;
+    }
+    // now we will search for kth element
+    int cnt = 1;
+    Node *temp = head;
+    Node *prev=nullptr;
+    while (temp)
+    {
+         cnt++;
+         prev = temp;
+         temp = temp->next;
+        if (cnt == k)
+        {
+            prev->next = prev->next->next;
+            delete (temp);
+            break;
+        }
+       
+    }
+    return head;
+}
+// remove when data is given
+Node *deltedata(Node *head, int val)
+{
+    if (!head)
+        return nullptr;
+    if (head->data == val)
+    {
+        Node *temp = head;
+        head = head->next;
+        delete temp;
+
+        return head;
+    }
+    // now we will search for kth element
+ 
+    Node *temp = head;
+    Node *prev=nullptr;
+    while (temp)
+    {
+      
+         prev = temp;
+         temp = temp->next;
+        if (temp->data==val)
+        {
+            prev->next = prev->next->next;
+            delete (temp);
+            break;
+        }
+       
+    }
+    return head;
+}
+int main()
+{
+    // static variable
     // Node n1(2);
     // dynamic from array
-    vector<int> arr = {1,3,4,5,6,7,3,2,1};
+    vector<int> arr = {1, 3, 4, 5, 6, 7, 3, 2, 1};
     Node *head = createLLFromArray(arr);
-         PrintLL(head);
-            // head = deleteHead(head);
-            // cout<<"printing LL again"<<endl;
+    PrintLL(head);
+    // head = deleteHead(head);
+    // cout<<"printing LL again"<<endl;
 
-            // PrintLL(head);
+    // PrintLL(head);
 
-            cout<<"printing LL again"<<endl;
-            deleteLast(head);
-          
-            PrintLL(head);
+    cout << "printing LL again" << endl;
+    // deleteLast(head);
+    // deleting the kth node
+    // head = delteK(head, 9);
+    head = deltedata(head,3);
 
-
+    PrintLL(head);
 
     return 0;
 }
