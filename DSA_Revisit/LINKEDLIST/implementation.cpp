@@ -33,11 +33,11 @@ void PrintLL(Node *&head)
 {
         Node *temp = head;
         while(temp){
-            cout<<temp->data<<" ";
+            cout<<temp->data<<"->";
             temp = temp->next;
 
         }
-        cout<<endl;
+        cout<<"null"<<endl;
 
 }
 // delete head of the Linked List
@@ -51,14 +51,43 @@ Node* deleteHead(Node *&head){
     delete(temp);
     return head;
 }
+// deleting the tail
+// first we have to reach the seonc last element of the linked list and should exist
+Node* deleteLast(Node *&head){
+    if(!head) return nullptr;
+    if(!(head->next)){
+        free(head);
+        head = nullptr;
+        return head;
+    }
+        Node *temp= head;
+        while(temp->next->next){
+            temp = temp->next;
+        }
+        free(temp->next);
+          temp->next = nullptr;
+        return head;
+}
 
 
 int main() {
     // static variable 
     // Node n1(2);
     // dynamic from array
-    vector<int> arr = {1,2,3,4,5,6};
+    vector<int> arr = {1,3,4,5,6,7,3,2,1};
     Node *head = createLLFromArray(arr);
          PrintLL(head);
+            // head = deleteHead(head);
+            // cout<<"printing LL again"<<endl;
+
+            // PrintLL(head);
+
+            cout<<"printing LL again"<<endl;
+            deleteLast(head);
+          
+            PrintLL(head);
+
+
+
     return 0;
 }
