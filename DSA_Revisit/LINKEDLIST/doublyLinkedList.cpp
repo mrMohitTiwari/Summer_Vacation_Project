@@ -121,6 +121,20 @@ node *deleteKth(node *head, int k)
     return head;
 }
 // implementing the  insert operations
+node* insertAtHead(node *head,int val){
+            node *newNode = new node(val);
+
+    if(!head){
+                head = newNode;
+                return head;
+    }
+    head->prev = newNode;
+    newNode->next = head;
+    head = newNode;
+    return head;
+
+
+}
 int main()
 {
     vector<int> arr = {1};
@@ -130,6 +144,7 @@ int main()
     //  head = removeTail(head);
     cout << "again printing DLL\n";
     head = deleteKth(head, 1);
+    head = insertAtHead(head,38);
     print(head);
     return 0;
 }
