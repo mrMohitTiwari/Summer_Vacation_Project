@@ -46,10 +46,90 @@ void print(node *head)
     }
     cout << endl;
 }
+// deletion at head
+node *deleteHead(node *&head)
+{
+    if (!head)
+        return head;
+    if (!(head->next))
+    {
+        node *temp = head;
+        delete temp;
+        return nullptr;
+    }
+    node *temp = head;
+    head = head->next;
+    temp->next = nullptr;
+    
+    delete temp;
+    return head;
+}
+// deleting the tail of DLL
+node *removeTail(node *&head)
+{
+    if (!head)
+        return nullptr;
+    if (head->next == NULL)
+    {
+        node *temp = head;
+        head = NULL;
+        delete temp;
+        return head;
+    }
+    node *temp = head;
+    while (temp->next)
+        temp = temp->next;
+    node *prev = temp->prev;
+    temp->prev = nullptr;
+    prev->next = NULL;
+    delete temp;
+    return head;
+}
+// deleting the kth node
+node *deleteKth(node *head, int k)
+{
+    if (!head)
+        return head;
+    node *knode = head;
+    int cnt = 0;
+    while (knode)
+    {
+        cnt++;
+        if (cnt == k)
+            break;
+        knode = knode->next;
+    }
+
+    node *prev = knode->prev;
+    node *front = knode->next;
+    if (!(prev) && !(front))
+    {
+        delete knode;
+        return nullptr;
+    }
+    // if head node to be deleted
+    else if (prev == NULL)
+      return  deleteHead(head);
+    // tailElenment
+    else if (front == NULL)
+       return  removeTail(head);
+    // middle element
+
+    prev->next = front;
+    front->prev = prev;
+    free(knode);
+    return head;
+}
+// implementing the  insert operations
 int main()
 {
-    vector<int> arr = {1, 3, 4, 5, 6, 7, 3, 2, 1};
+    vector<int> arr = {1};
     node *head = createDDLLArr(arr);
+    print(head);
+    //    head =  deleteHead(head);
+    //  head = removeTail(head);
+    cout << "again printing DLL\n";
+    head = deleteKth(head, 1);
     print(head);
     return 0;
 }
