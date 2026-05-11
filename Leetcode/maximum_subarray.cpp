@@ -1,0 +1,14 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+vector<int> arr;
+int sum = 0; int maxi = LONG_MIN;
+for(int i =0 ;i<arr.size();i++){
+sum+=arr[i];
+maxi = max(maxi,sum);
+if(sum<0) sum=0;
+}
+if(maxi<0) return 0;
+    return 0;
+}
