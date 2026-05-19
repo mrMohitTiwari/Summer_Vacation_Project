@@ -226,7 +226,7 @@ if(temp->next->data == val)
 
     return head;
 }
-
+// revese a doubly Linked List
 int main()
 {
     // static variable
