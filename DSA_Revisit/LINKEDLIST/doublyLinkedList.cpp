@@ -60,7 +60,7 @@ node *deleteHead(node *&head)
     node *temp = head;
     head = head->next;
     temp->next = nullptr;
-    
+
     delete temp;
     return head;
 }
@@ -109,10 +109,10 @@ node *deleteKth(node *head, int k)
     }
     // if head node to be deleted
     else if (prev == NULL)
-      return  deleteHead(head);
+        return deleteHead(head);
     // tailElenment
     else if (front == NULL)
-       return  removeTail(head);
+        return removeTail(head);
     // middle element
 
     prev->next = front;
@@ -121,30 +121,73 @@ node *deleteKth(node *head, int k)
     return head;
 }
 // implementing the  insert operations
-node* insertAtHead(node *head,int val){
-            node *newNode = new node(val);
+node *insertAtHead(node *head, int val)
+{
+    node *newNode = new node(val);
 
-    if(!head){
-                head = newNode;
-                return head;
+    if (!head)
+    {
+        head = newNode;
+        return head;
     }
     head->prev = newNode;
     newNode->next = head;
     head = newNode;
     return head;
+}
+// inset at on place before tail
+node *insetAtTail(node *head, int val)
+{
+    // if we have only one element in the Linked List then we have head there only so we can just insert at head to insert an element before the tail
+    if (head->next == NULL)
+    {
 
-
+        return insertAtHead(head, val);
+    }
+    node *tail = head;
+    while (tail->next)
+        tail = tail->next;
+    node *prev = tail->prev;
+    node *newNode = new node(val, prev, tail);
+    prev->next = newNode;
+    tail->prev = newNode;
+    return head;
+}
+// insert at keth position
+node *insertAtkth(node *head, int k, int val)
+{
+    if (k == 1)
+        return insertAtHead(head, val);
+    node *temp = head;
+    int cnt = 0;
+    while (temp != NULL)
+    {
+        cnt++;
+        if (k == cnt)
+            break;
+        temp = temp->next;
+    }
+    // create a new node
+    node *prev = temp->prev;
+    node *newNode = new node(val, prev, temp);
+    prev->next = newNode;
+    temp->prev = newNode;
+    return head;
 }
 int main()
+
 {
-    vector<int> arr = {1};
+    vector<int> arr = {1, 3, 4, 5, 6, 3};
     node *head = createDDLLArr(arr);
     print(head);
     //    head =  deleteHead(head);
     //  head = removeTail(head);
     cout << "again printing DLL\n";
-    head = deleteKth(head, 1);
-    head = insertAtHead(head,38);
+    // head = deleteKth(head, 1);
+    // head = insertAtHead(head,38);
+    // head = insetAtTail(head,40);
+    // inserting at kth position
+    head = insertAtkth(head, 6, 300);
     print(head);
     return 0;
 }
