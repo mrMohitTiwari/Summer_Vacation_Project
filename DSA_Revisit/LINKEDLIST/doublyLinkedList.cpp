@@ -174,6 +174,27 @@ node *insertAtkth(node *head, int k, int val)
     temp->prev = newNode;
     return head;
 }
+
+// function to reverse Doubly Linked List
+node* reverseLL(node* head)
+{
+    if(!head || !(head->next)) return head;
+    node* prev = NULL;
+    node* curr = head;
+
+   while(curr){
+    prev = curr->prev;
+    curr->prev = curr->next;
+    curr->next = prev;
+    curr= curr->prev;
+   }
+
+
+return prev->prev;
+
+}
+
+
 int main()
 
 {
@@ -187,7 +208,9 @@ int main()
     // head = insertAtHead(head,38);
     // head = insetAtTail(head,40);
     // inserting at kth position
-    head = insertAtkth(head, 6, 300);
+    // head = insertAtkth(head, 6, 300);
+    head = reverseLL(head);
+
     print(head);
     return 0;
 }

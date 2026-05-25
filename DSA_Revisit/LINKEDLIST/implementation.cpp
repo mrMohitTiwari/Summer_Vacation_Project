@@ -227,6 +227,9 @@ if(temp->next->data == val)
     return head;
 }
 // revese a doubly Linked List
+// can be reversed using a stack or recursion
+
+
 int main()
 {
     // static variable
